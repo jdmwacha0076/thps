@@ -1,60 +1,70 @@
-<x-guest-layout>
-    <x-authentication-card>
-        <x-slot name="logo">
-            <x-authentication-card-logo />
-        </x-slot>
+<!DOCTYPE html>
+<html lang="en">
 
-        <x-validation-errors class="mb-4" />
+<head>
+    <link rel="icon" type="image/png" href="{{ asset('logo.png') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THPS | Project Interview</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="{{ asset('css/welcome.css') }}" rel="stylesheet">
+</head>
+
+<body class="d-flex align-items-center justify-content-center min-vh-100 p-3">
+    <div class="card-custom text-center w-100">
+
+        <div class="mb-4">
+            <i class="fas fa-user-plus text-black" style="font-size: 4rem;"></i>
+        </div>
+
+        <h1 class="h3 font-weight-bold text-black mb-4">Register Account</h1>
+
+        <div>
+            @if(session('error'))
+            <div class="alert alert-danger">
+                {!! session('error') !!}
+            </div>
+            @endif
+
+            @if(session('success'))
+            <div class="alert alert-success">
+                {!! session('success') !!}
+            </div>
+            @endif
+
+            @if($errors->any())
+            <div class="alert alert-danger">
+                @foreach($errors->all() as $error)
+                <div>{{ $error }}</div>
+                @endforeach
+            </div>
+            @endif
+        </div>
 
         <form method="POST" action="{{ route('register') }}">
             @csrf
-
-            <div>
-                <x-label for="name" value="{{ __('Name') }}" />
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+            <div class="form-group mb-4">
+                <input type="text" name="name" id="name" placeholder="User name" class="form-control form-control-custom">
             </div>
-
-            <div class="mt-4">
-                <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
+            <div class="form-group mb-4">
+                <input type="email" name="email" id="email" placeholder="Email" class="form-control form-control-custom">
             </div>
-
-            <div class="mt-4">
-                <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
+            <div class="form-group mb-4">
+                <input type="password" name="password" id="password" placeholder="Password" class="form-control form-control-custom">
             </div>
-
-            <div class="mt-4">
-                <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
-                <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
+            <div class="form-group mb-4">
+                <input type="password" name="password_confirmation" id="password_confirmation" placeholder="Repeat password" class="form-control form-control-custom">
             </div>
-
-            @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
-                <div class="mt-4">
-                    <x-label for="terms">
-                        <div class="flex items-center">
-                            <x-checkbox name="terms" id="terms" required />
-
-                            <div class="ms-2">
-                                {!! __('I agree to the :terms_of_service and :privacy_policy', [
-                                        'terms_of_service' => '<a target="_blank" href="'.route('terms.show').'" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">'.__('Terms of Service').'</a>',
-                                        'privacy_policy' => '<a target="_blank" href="'.route('policy.show').'" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">'.__('Privacy Policy').'</a>',
-                                ]) !!}
-                            </div>
-                        </div>
-                    </x-label>
-                </div>
-            @endif
-
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
-
-                <x-button class="ms-4">
-                    {{ __('Register') }}
-                </x-button>
+            <div class="form-group mb-4">
+                <button type="submit" class="btn btn-primary-custom w-100 py-2">
+                    <i class="fas fa-user-plus mr-2"></i> Complete Registration
+                </button>
             </div>
         </form>
-    </x-authentication-card>
-</x-guest-layout>
+
+    </div>
+    
+</body>
+
+</html>

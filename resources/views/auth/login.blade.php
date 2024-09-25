@@ -1,48 +1,66 @@
-<x-guest-layout>
-    <x-authentication-card>
-        <x-slot name="logo">
-            <x-authentication-card-logo />
-        </x-slot>
+<!DOCTYPE html>
+<html lang="en">
 
-        <x-validation-errors class="mb-4" />
+<head>
+    <link rel="icon" type="image/png" href="{{ asset('logo.png') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THPS | Project Interview</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="{{ asset('css/welcome.css') }}" rel="stylesheet">
+</head>
 
-        @session('status')
-            <div class="mb-4 font-medium text-sm text-green-600">
-                {{ $value }}
+<body class="d-flex align-items-center justify-content-center min-vh-100 p-3">
+    <div class="card-custom text-center w-100">
+
+        <div class="mb-4">
+            <i class="fas fa-user-circle text-black" style="font-size: 4rem;"></i>
+        </div>
+
+        <h1 class="h3 font-weight-bold text-black mb-4"> Login</h1>
+
+        <div>
+            @if(session('error'))
+            <div class="alert alert-danger">
+                {!! session('error') !!}
             </div>
-        @endsession
+            @endif
+
+            @if(session('success'))
+            <div class="alert alert-success">
+                {!! session('success') !!}
+            </div>
+            @endif
+
+            @if($errors->any())
+            <div class="alert alert-danger">
+                @foreach($errors->all() as $error)
+                <div>{{ $error }}</div>
+                @endforeach
+            </div>
+            @endif
+        </div>
 
         <form method="POST" action="{{ route('login') }}">
             @csrf
-
-            <div>
-                <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+            <div class="form-group mb-4">
+                <input type="email" name="email" id="email" placeholder="Email" class="form-control form-control-custom">
             </div>
-
-            <div class="mt-4">
-                <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
+            <div class="form-group mb-4">
+                <input type="password" name="password" id="password" placeholder="Password" class="form-control form-control-custom">
             </div>
-
-            <div class="block mt-4">
-                <label for="remember_me" class="flex items-center">
-                    <x-checkbox id="remember_me" name="remember" />
-                    <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-                </label>
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
-                @endif
-
-                <x-button class="ms-4">
-                    {{ __('Log in') }}
-                </x-button>
+            <div class="form-group mb-4">
+                <button type="submit" class="btn btn-primary-custom w-100 py-2">
+                    <i class="fas fa-sign-in-alt mr-2"></i> Complete Login
+                </button>
             </div>
         </form>
-    </x-authentication-card>
-</x-guest-layout>
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
