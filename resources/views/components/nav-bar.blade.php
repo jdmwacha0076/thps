@@ -101,16 +101,16 @@
                         <a class="nav-link" href="{{ url('/dashboard') }}">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/data-fetch') }}">Fetch</a>
+                        <a class="nav-link" href="{{ url('/api/products') }}">API View JSON</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/all-products') }}">Products</a>
+                        <a class="nav-link" href="{{ url('/api-products') }}">API View Table</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/search-data') }}">Search</a>
+                        <a class="nav-link" href="{{ url('/view/api/products') }}">API Get Product details</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/filter-data') }}">Filter</a>
+                        <a class="nav-link" href="{{ url('') }}">Fetched data</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle user-name" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -132,7 +132,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    
+
 </body>
 
 </html>
