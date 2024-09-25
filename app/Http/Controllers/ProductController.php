@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 
@@ -117,5 +118,85 @@ class ProductController extends Controller
         });
 
         return view('details-per-product', compact('product'));
+    }
+
+    //For fetching data from the API and store into the database
+    public function fetchAndStoreProducts()
+    {
+        $response = Http::get('https://dummyjson.com/products');
+
+        if ($response->successful()) {
+            $products = $response->json()['products'];
+
+            $newProducts = [];
+            foreach ($products as $product) {
+                $existingProduct = Product::find($product['id']);
+
+                if (!$existingProduct) {
+                    $newProducts[] = [
+                        'id' => $product['id'],
+                        'title' => $product['title'],
+                        'price' => $product['price'],
+                        'description' => $product['description'],
+                        'category' => $product['category'],
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ];
+                }
+            }
+
+            if (!empty($newProducts)) {
+                Product::insert($newProducts);
+                return redirect()->route('update-product-details')->with('success', 'New products fetched and stored locally.');
+            } else {
+                return redirect()->route('update-product-details')->with('error', 'No new products to fetch.');
+            }
+        }
+
+        return redirect()->route('update-product-details')->with('error', 'Failed to products...!!!');
+    }
+
+    //For viewing the fetched data and update price
+    public function viewUpdateProductDetails()
+    {
+        $products = Product::all();
+        return view('update-product-details', compact('products'));
+    }
+
+    //For updating a price for a product
+    public function updatePoductPrice(Request $request)
+    {
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'price' => 'required|numeric|min:0'
+        ]);
+
+        $product = Product::find($request->input('product_id'));
+        $product->price = $request->input('price');
+        $product->save();
+
+        return redirect()->route('update-product-details')->with('success', 'Product price updated.');
+    }
+
+    //For complex query filtering
+    public function ComplexQuerying(Request $request)
+    {
+        $query = Product::query();
+
+        if ($request->has('search') && $request->input('search') != '') {
+            $query->where('title', 'like', '%' . $request->input('search') . '%');
+        }
+
+        if ($request->has('category') && $request->input('category') != '') {
+            $query->where('category', $request->input('category'));
+        }
+
+        if ($request->has('sort') && in_array($request->input('sort'), ['asc', 'desc'])) {
+            $query->orderBy('price', $request->input('sort'));
+        }
+
+        $products = $query->get();
+
+        return view('complex-querying', compact('products'));
     }
 }

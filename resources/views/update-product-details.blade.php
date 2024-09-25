@@ -2,7 +2,7 @@
     <link rel="icon" type="image/png" href="{{ asset('logo.png') }}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THPS | Project Interview</title>
+    <title>THPS | Fetch data</title>
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
@@ -14,32 +14,32 @@
         <div class="animated fadeIn">
             <div class="card mb-4">
                 <div class="card-header">
-                    <h5 class="mb-1" style="text-align: center;">Fetch Products</h5>
+                    <h5 class="mb-1" style="text-align: center;">Update Fetched Products</h5>
                 </div>
 
                 <div class="panel-body" style="padding: 10px;">
-                    <!-- Success/Error Messages -->
+
                     @if (session('success'))
-                        <div class="alert alert-success">{{ session('success') }}</div>
+                    <div class="alert alert-success">{{ session('success') }}</div>
                     @endif
                     @if (session('error'))
-                        <div class="alert alert-danger">{{ session('error') }}</div>
+                    <div class="alert alert-danger">{{ session('error') }}</div>
                     @endif
 
                     <div class="text-center mb-3">
-                        <!-- Button to Fetch Products from API -->
-                        <a href="{{ route('products.fetch') }}" class="btn btn-success">Fetch Products from API</a>
+                        <a href="{{ route('products.fetch') }}" class="btn btn-success"><i class="fas fa-database"></i> Fetch Products from API</a>
                     </div>
-                    
+
                     <div class="table-responsive">
                         <table class="table table-striped" id="api-products">
                             <thead>
                                 <tr class="table-info">
-                                    <th>ID</th>
-                                    <th>Title</th>
-                                    <th>Price</th>
-                                    <th>Description</th>
-                                    <th>Category</th>
+                                    <th>&emsp;&emsp;ID:</th>
+                                    <th>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Title</th>
+                                    <th>&emsp;&emsp;&emsp;&emsp;Price</th>
+                                    <th>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Description</th>
+                                    <th>&emsp;&emsp;&emsp;Category</th>
+                                    <th>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Update</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -47,13 +47,20 @@
                                 <tr>
                                     <td>{{ $product->id }}</td>
                                     <td>{{ $product->title }}</td>
-                                    <td>${{ $product->price }}</td>
+                                    <td>Tsh {{ $product->price }}</td>
                                     <td>{{ $product->description }}</td>
                                     <td>{{ $product->category }}</td>
+                                    <td>
+                                        <button class="btn btn-info" data-toggle="modal" data-target="#updatePriceModal"
+                                            data-id="{{ $product->id }}" data-title="{{ $product->title }}" data-price="{{ $product->price }}">
+                                            <i class="fas fa-edit"></i> Update
+                                        </button>
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
+
                     </div>
                 </div>
             </div>
@@ -61,7 +68,45 @@
     </div>
 </div>
 
-<!-- DataTables JS -->
+<!-- Modal and its script for updating the product price -->
+<div class="modal fade" id="updatePriceModal" tabindex="-1" role="dialog" aria-labelledby="updatePriceModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="{{ route('products.updatePrice') }}" method="POST">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updatePriceModalLabel">Update Price for <span id="productTitle"></span></h5>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="product_id" id="productId">
+                    <div class="form-group">
+                        <label for="newPrice"><strong>New Price (Tsh):</strong></label>
+                        <input type="number" class="form-control" id="newPrice" name="price" min="0" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-dismiss="modal"><i class="fas fa-times"></i> Close</button>
+                    <button type="submit" class="btn btn-info"><i class="fas fa-check"></i> Update Price</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#updatePriceModal').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget);
+        var productId = button.data('id');
+        var productTitle = button.data('title');
+        var productPrice = button.data('price');
+
+        var modal = $(this);
+        modal.find('.modal-title #productTitle').text(productTitle);
+        modal.find('.modal-body #productId').val(productId);
+        modal.find('.modal-body #newPrice').val(productPrice);
+    });
+</script>
+
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
 <script>
@@ -72,3 +117,5 @@
         });
     });
 </script>
+
+@include('components.footer')

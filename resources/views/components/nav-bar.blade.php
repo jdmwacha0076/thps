@@ -90,7 +90,7 @@
 
         <div class="container">
             <a class="navbar-brand" href="#">
-                <i class="fas fa-cubes"></i> THPS Interview
+                <i class="fas fa-cubes"></i> Data Management
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon navbar-toggler-icon-custom"></span>
@@ -101,16 +101,19 @@
                         <a class="nav-link" href="{{ url('/dashboard') }}">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/api/products') }}">API View JSON</a>
+                        <a class="nav-link" href="{{ url('/api/products') }}">View JSON</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/api-products') }}">API View Table</a>
+                        <a class="nav-link" href="{{ url('/api-products') }}">API View</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/view/api/products') }}">API Get Product details</a>
+                        <a class="nav-link" href="{{ url('/view/api/products') }}">Product details</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('') }}">Fetched data</a>
+                        <a class="nav-link" href="{{ url('/update-product-details') }}">Fetch/Update</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/complex-querying') }}">Complex Query</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle user-name" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
