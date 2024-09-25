@@ -20,40 +20,40 @@
 
                 <div class="panel-body" style="padding: 10px;">
                     <form action="{{ route('api.products.search') }}" method="GET" class="mb-4">
+                        <label for="search" class="font-weight-bold">Search by Name:</label>
                         <input type="text" name="query" class="form-control" placeholder="Search by product name" required>
-                        <button type="submit" class="btn btn-info mt-2">Search by product name</button>
+                        <button type="submit" class="btn btn-info mt-2"><i class="fas fa-search"></i> Search by product name</button>
                     </form>
 
                     <form action="{{ route('api.products.filter') }}" method="GET" class="mb-4">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <select name="category" class="form-control">
-                                    <option value="">Select product category</option>
-                                    <option value="furniture">Furniture</option>
-                                    <option value="groceries">Groceries</option>
-                                    <option value="fragrances">Fragrances</option>
-                                    <option value="beauty">Beauty</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <input type="number" name="min_price" class="form-control" placeholder="Enter minimum Price" min="0">
-                            </div>
-                            <div class="col-md-4">
-                                <input type="number" name="max_price" class="form-control" placeholder="Enter maximum Price" min="0">
-                            </div>
+                        <div class="form-group">
+                            <label for="sort" class="font-weight-bold">Sort by Price:</label>
+                            <select name="sort" class="form-control">
+                                <option value="">Choose sort order</option>
+                                <option value="asc">Price: Low to High</option>
+                                <option value="desc">Price: High to Low</option>
+                            </select>
                         </div>
-                        <button type="submit" class="btn btn-info mt-2">Filter API Products</button>
+                        <div class="form-group">
+                            <label for="search" class="font-weight-bold">Minimum price:</label>
+                            <input type="number" name="min_price" class="form-control" placeholder="Enter minimum Price" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="search" class="font-weight-bold">Maximum price:</label>
+                            <input type="number" name="max_price" class="form-control" placeholder="Enter maximum Price" min="0">
+                        </div>
+                        <button type="submit" class="btn btn-info mt-2"><i class="fas fa-filter"></i> Filter API Products</button>
                     </form>
 
                     <div class="table-responsive">
                         <table class="table table-striped" id="api-products">
                             <thead>
                                 <tr class="table-info">
-                                    <th>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;ID:</th>
+                                    <th>&emsp;&emsp;ID:</th>
                                     <th>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Title</th>
-                                    <th>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Price</th>
+                                    <th>&emsp;&emsp;&emsp;&emsp;Price</th>
                                     <th>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Description</th>
-                                    <th>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Category</th>
+                                    <th>&emsp;&emsp;&emsp;Category</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -85,3 +85,5 @@
         });
     });
 </script>
+
+@include('components.footer')

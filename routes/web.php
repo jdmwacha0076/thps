@@ -32,6 +32,20 @@ Route::get('/view/api/products', [ProductController::class, 'showProducts'])->na
 //For showing the product detailed data
 Route::get('/products/{id}', [ProductController::class, 'showProductDetails'])->name('products.show');
 
+//For fetching data from the API and store into the database
+Route::get('/fetch-products', [ProductController::class, 'fetchAndStoreProducts'])->name('products.fetch');
+
+//For viewing the fetched data and update price
+Route::get('/update-product-details', [ProductController::class, 'viewUpdateProductDetails'])->name('update-product-details');
+
+//For updating a price for a product
+route::post('/products/update-price', [ProductController::class, 'updatePoductPrice'])->name('products.updatePrice');
+
+//For complex query filtering
+Route::get('/complex-querying', [ProductController::class, 'ComplexQuerying'])->name('products.filter');
+
+
+
 
 
 

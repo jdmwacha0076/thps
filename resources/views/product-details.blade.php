@@ -22,11 +22,11 @@
                         <table class="table table-striped" id="api-products">
                             <thead>
                                 <tr class="table-info">
-                                    <th>ID:</th>
+                                    <th>&emsp;&emsp;ID:</th>
                                     <th>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Title</th>
-                                    <th>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Price</th>
+                                    <th>&emsp;&emsp;&emsp;&emsp;Price</th>
                                     <th>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Description</th>
-                                    <th>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Category</th>
+                                    <th>&emsp;&emsp;&emsp;Category</th>
                                     <th>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;View</th>
                                 </tr>
                             </thead>
@@ -39,7 +39,7 @@
                                     <td>{{ $product['description'] }}</td>
                                     <td>{{ $product['category'] }}</td>
                                     <td>
-                                        <a href="{{ route('products.show', $product['id']) }}" class="btn btn-info">View details</a>
+                                        <a href="{{ route('products.show', $product['id']) }}" class="btn btn-info"><i class="fas fa-eye"></i> View</a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -62,3 +62,5 @@
         });
     });
 </script>
+
+@include('components.footer')
