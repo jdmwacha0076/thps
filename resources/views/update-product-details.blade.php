@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="panel-body" style="padding: 10px;">
-
+                    <!-- Success/Error Messages -->
                     @if (session('success'))
                         <div class="alert alert-success">{{ session('success') }}</div>
                     @endif
@@ -27,6 +27,7 @@
                     @endif
 
                     <div class="text-center mb-3">
+                        <!-- Button to Fetch Products from API -->
                         <a href="{{ route('products.fetch') }}" class="btn btn-success">Fetch Products from API</a>
                     </div>
                     
@@ -60,6 +61,7 @@
     </div>
 </div>
 
+<!-- DataTables JS -->
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
 <script>
