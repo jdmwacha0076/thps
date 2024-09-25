@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 
@@ -12,10 +13,14 @@ class ProductController extends Controller
     //For fetching data from the API in JSON format
     private function fetchRawData()
     {
-        $url = 'https://dummyjson.com/products';
-        $response = file_get_contents($url);
+        $url = env('PRODUCTS_API_URL');
+        $response = @file_get_contents($url);
 
-        return $response !== false ? json_decode($response, true) : null;
+        if ($response === false) {
+            Log::error('Failed to fetch data, see the error here: ' . $url);
+            return null;
+        }
+        return json_decode($response, true);
     }
 
     public function JSONRawData()
@@ -106,15 +111,14 @@ class ProductController extends Controller
     //For showing the product detailed data
     public function showProductDetails($id)
     {
-
         $product = Cache::remember("product_$id", 10 * 60, function () use ($id) {
-            $response = Http::get("https://dummyjson.com/products/$id");
+            $response = Http::get(env('PRODUCTS_API_URL') . "/$id");
 
-            if ($response->successful()) {
-                return $response->json();
-            } else {
+            if ($response->failed()) {
                 abort(404, 'Product not found.');
             }
+
+            return $response->json();
         });
 
         return view('details-per-product', compact('product'));
@@ -123,9 +127,10 @@ class ProductController extends Controller
     //For fetching data from the API and store into the database
     public function fetchAndStoreProducts()
     {
-        $response = Http::get('https://dummyjson.com/products');
+        $response = Http::get(env('PRODUCTS_API_URL'));
 
         if ($response->successful()) {
+            Log::error('Failed to fetch products from the API: ' . $response->status());
             $products = $response->json()['products'];
 
             $newProducts = [];
@@ -147,7 +152,7 @@ class ProductController extends Controller
 
             if (!empty($newProducts)) {
                 Product::insert($newProducts);
-                return redirect()->route('update-product-details')->with('success', 'New products fetched and stored locally.');
+                return redirect()->route('update-product-details')->with('success', 'New products fetched from th e API and stored in MYSQL database.');
             } else {
                 return redirect()->route('update-product-details')->with('error', 'No new products to fetch.');
             }
@@ -175,12 +180,20 @@ class ProductController extends Controller
         $product->price = $request->input('price');
         $product->save();
 
-        return redirect()->route('update-product-details')->with('success', 'Product price updated.');
+        return redirect()->route('update-product-details')->with('success', 'Completed updating the product price.');
     }
 
     //For complex query filtering
     public function ComplexQuerying(Request $request)
     {
+        $request->validate([
+            'search' => 'nullable|string',
+            'category' => 'nullable|string|in:furniture,groceries,fragrances,beauty',
+            'min_price' => 'nullable|numeric|min:0',
+            'max_price' => 'nullable|numeric|min:0',
+            'sort' => 'nullable|string|in:asc,desc',
+        ]);
+
         $query = Product::query();
 
         if ($request->has('search') && $request->input('search') != '') {
@@ -189,6 +202,14 @@ class ProductController extends Controller
 
         if ($request->has('category') && $request->input('category') != '') {
             $query->where('category', $request->input('category'));
+        }
+
+        if ($request->has('min_price') && $request->input('min_price') !== null) {
+            $query->where('price', '>=', $request->input('min_price'));
+        }
+
+        if ($request->has('max_price') && $request->input('max_price') !== null) {
+            $query->where('price', '<=', $request->input('max_price'));
         }
 
         if ($request->has('sort') && in_array($request->input('sort'), ['asc', 'desc'])) {

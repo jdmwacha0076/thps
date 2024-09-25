@@ -42,15 +42,4 @@ Route::get('/update-product-details', [ProductController::class, 'viewUpdateProd
 route::post('/products/update-price', [ProductController::class, 'updatePoductPrice'])->name('products.updatePrice');
 
 //For complex query filtering
-Route::get('/complex-querying', [ProductController::class, 'ComplexQuerying'])->name('products.filter');
-
-
-
-
-
-
-
-
-
-
-
+Route::get('/complex-querying', [ProductController::class, 'ComplexQuerying'])->name('products.index');
