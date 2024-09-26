@@ -58,7 +58,7 @@
                             </a>
                         </div>
                         <div class="card-body">
-                            <p>This tab allows users to view raw API data in JSON format. After viewing the data, users can return to the main system by using the browser's back button.</p>
+                            <p>This tab allows users to view raw API data in JSON format when in local environment. After viewing the data, users can return to the main system by using the browser's back button.</p>
                         </div>
                     </div>
 
