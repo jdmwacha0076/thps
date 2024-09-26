@@ -1,16 +1,23 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\SessionTimeout;
 use App\Http\Controllers\ProductController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
+//For landing at the welcome page
+Route::get('/', function () {
+    return view('welcome');
+})->name('welcome');
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
+    SessionTimeout::class,
 ])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
