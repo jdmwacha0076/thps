@@ -183,6 +183,23 @@ class ProductController extends Controller
         return redirect()->route('update-product-details')->with('success', 'Completed updating the product price.');
     }
 
+    //For deleting a product in MYSQL database
+    public function deleteProduct(Request $request)
+    {
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+        ]);
+
+        $product = Product::find($request->input('product_id'));
+
+        if ($product) {
+            $product->delete();
+            return redirect()->route('update-product-details')->with('success', 'Product deleted .');
+        }
+
+        return redirect()->route('update-product-details')->with('error', 'Failed to delete the product.');
+    }
+
     //For complex query filtering
     public function ComplexQuerying(Request $request)
     {

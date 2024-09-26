@@ -41,5 +41,8 @@ Route::get('/update-product-details', [ProductController::class, 'viewUpdateProd
 //For updating a price for a product
 route::post('/products/update-price', [ProductController::class, 'updatePoductPrice'])->name('products.updatePrice');
 
+//For deleting a product in MYSQL database
+Route::delete('/products/delete', [ProductController::class, 'deleteProduct'])->name('products.delete');
+
 //For complex query filtering
 Route::get('/complex-querying', [ProductController::class, 'ComplexQuerying'])->name('products.index');

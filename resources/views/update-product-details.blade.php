@@ -40,6 +40,7 @@
                                     <th>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Description</th>
                                     <th>&emsp;&emsp;&emsp;Category</th>
                                     <th>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Update</th>
+                                    <th>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -54,6 +55,12 @@
                                         <button class="btn btn-info" data-toggle="modal" data-target="#updatePriceModal"
                                             data-id="{{ $product->id }}" data-title="{{ $product->title }}" data-price="{{ $product->price }}">
                                             <i class="fas fa-edit"></i> Update
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-danger" data-toggle="modal" data-target="#deleteProductModal"
+                                            data-id="{{ $product->id }}" data-title="{{ $product->title }}">
+                                            <i class="fas fa-trash"></i> Delete
                                         </button>
                                     </td>
                                 </tr>
@@ -106,6 +113,42 @@
         modal.find('.modal-body #newPrice').val(productPrice);
     });
 </script>
+
+<!-- Modal and its script for deleting a product -->
+<div class="modal fade" id="deleteProductModal" tabindex="-1" role="dialog" aria-labelledby="deleteProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="{{ route('products.delete') }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteProductModalLabel">Delete Product <span id="productTitleToDelete"></span>?</h5>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="product_id" id="productIdToDelete">
+                    <p>Are you sure you want to delete this product?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-dismiss="modal"><i class="fas fa-times"></i> Close</button>
+                    <button type="submit" class="btn btn-danger"><i class="fas fa-check"></i> Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#deleteProductModal').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget);
+        var productId = button.data('id');
+        var productTitle = button.data('title');
+
+        var modal = $(this);
+        modal.find('.modal-title #productTitleToDelete').text(productTitle);
+        modal.find('.modal-body #productIdToDelete').val(productId);
+    });
+</script>
+
 
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
