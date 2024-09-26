@@ -13,7 +13,7 @@ class SessionTimeout
             $lastActivity = session('last_activity');
 
             if ($lastActivity) {
-                $expirationTime = config('session.timeout', 1) * 10;
+                $expirationTime = config('session.timeout', 1) * 60;
                 $currentTime = time();
 
                 if ($currentTime - $lastActivity > $expirationTime) {
