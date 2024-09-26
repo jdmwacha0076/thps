@@ -1,66 +1,56 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Assistant Systems Administrator Role Evaluation - Laravel PHP API Project
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Project Description
 
-## About Laravel
+This project is a PHP-based API that integrates with an external dataset from [DummyJSON](https://dummyjson.com/products). The API is designed to perform various operations on the retrieved data, such as data retrieval, searching, filtering, sorting, and updating products. It also implements advanced features like caching, rate limiting, error handling, and security.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Key Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1. **Data Retrieval and Caching**:
+   - Fetches data from the provided external dataset.
+   - Implements a caching mechanism to store retrieved data locally for 10 minutes to reduce external API calls.
+   - Cache invalidation ensures the cache is refreshed after the defined period to provide up-to-date data.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+2. **API Endpoints**:
+   - **List all products**: Retrieves the full list of products.
+   - **Search products by name**: Enables case-insensitive and partial match search functionality.
+   - **Filter products**: Allows filtering of products by category and price range.
+   - **Sort products**: Supports sorting of products by fields such as price and title.
+   - **Get product details by ID**: Returns detailed product information for a valid product ID.
+   - **Update product price**: Allows updating the price of a specific product locally.
+   - **Complex query**: Facilitates combined search, filter, and sort operations within a single request.
 
-## Learning Laravel
+3. **Error Handling**:
+   - Provides robust error handling for invalid IDs, categories, request parameters, and returns appropriate HTTP status codes.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+4. **Bonus Features** (Optional):
+   - Integration with MySQL for data storage.
+   - User authentication via jetstream.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Steps to Clone and Run the Project
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. **Clone the repository**:
+    ```bash
+    git clone https://github.com/jdmwacha0076/thps.git
+    cd thps
+    ```
 
-## Laravel Sponsors
+2. **Install dependencies**:
+    Run the following command to install required PHP dependencies.
+    ```bash
+    composer install
+    ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+3. **Environment setup**:
+    Copy the `.env.example` file to create your own `.env` file. The current .env uses DB_CONNECTION=mysql, DB_HOST=127.0.0.1, DB_PORT=3306, DB_DATABASE=thps_project, DB_USERNAME=root and DB_PASSWORD=root. Replace the API part if it has changed also - PRODUCTS_API_URL=https://dummyjson.com/products
+    ```bash
+    cp .env.example .env
+    ```
 
-### Premium Partners
+4. **Run the application**:
+    Start the Laravel development server using:
+    ```bash
+    php artisan serve
+    ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    The application will be accessible at `http://localhost:8000`.

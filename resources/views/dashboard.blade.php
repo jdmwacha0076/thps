@@ -102,7 +102,7 @@
                             </a>
                         </div>
                         <div class="card-body">
-                            <p>This tab enables users to perform complex queries, such as searching by name, filtering by category, and sorting by price, all within a single request.</p>
+                            <p>This tab enables users to perform complex queries, such as searching by name, filtering by category, and sorting by price for all products stored locally in the MYSQL database, all within a single request.</p>
                         </div>
                     </div>
 
