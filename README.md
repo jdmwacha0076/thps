@@ -42,7 +42,7 @@ This project is a PHP-based API that integrates with an external dataset from [D
     ```
 
 3. **Environment setup**:
-    Copy the `.env.example` file to create your own `.env` file.
+    Copy the `.env.example` file to create your own `.env` file. The current .env uses DB_CONNECTION=mysql, DB_HOST=127.0.0.1, DB_PORT=3306, DB_DATABASE=thps_project, DB_USERNAME=root and DB_PASSWORD=root. Replace the API part if it has changed also - PRODUCTS_API_URL=https://dummyjson.com/products
     ```bash
     cp .env.example .env
     ```
