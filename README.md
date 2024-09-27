@@ -45,11 +45,20 @@ This project is a PHP-based API that integrates with an external dataset from [D
 
 3. **Environment setup**:
     Copy the `.env.example` file to create your own `.env` file. The current .env uses DB_CONNECTION=mysql, DB_HOST=127.0.0.1, DB_PORT=3306, DB_DATABASE=thps_project, DB_USERNAME=root and DB_PASSWORD=root. Replace the API part if it has changed also - PRODUCTS_API_URL=https://dummyjson.com/products
+
+4. **Generate the application key**:
+    Run the following command to generate the application key.
     ```bash
-    cp .env.example .env
+    php artisan key:generate
     ```
 
-4. **Run the application**:
+5. **Run the migration command to create the mysql database**:
+Run the following command to create the mysql database.
+   ```bash
+   php artisan migrate
+   ```
+
+6. **Run the application**:
     Start the Laravel development server using:
     ```bash
     php artisan serve
