@@ -115,7 +115,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/complex-querying') }}">Complex Query</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle user-name" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{ Auth::user()->name }}
                         </a>
